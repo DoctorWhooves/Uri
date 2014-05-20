@@ -1,0 +1,34 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Data::Dumper qw(Dumper);
+
+sub create_sentence {
+	my @list = @_;
+	my $string = "";
+
+	foreach (@list) {
+		if ($string eq "") {
+			$string = $_;
+		} else {
+			$string = "$string $_";
+		}
+	}
+	parse_command($string);
+}
+
+sub parse_command {
+	my $string = $_[0];
+	my $res;
+
+	if ($string =~ /date/) {
+		$res = `date +'%m/%d/%Y'`;
+		print "The current date is " . $res;
+	} elsif ($string =~ /time/) {
+		$res = `date +'%r'`;
+		print "The current time is " . $res;
+	}
+}
+
+create_sentence(@ARGV);
